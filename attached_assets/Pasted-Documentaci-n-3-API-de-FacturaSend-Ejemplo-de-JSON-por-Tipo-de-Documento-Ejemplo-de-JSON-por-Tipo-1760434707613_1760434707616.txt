@@ -1,0 +1,1011 @@
+Documentación
+3-API de FacturaSend
+Ejemplo de JSON por Tipo de Documento
+Ejemplo de JSON por Tipo de Documento
+
+Marcos Jara
+Updated on 12 de septiembre de 2025
+8 minutos de lectura
+
+Tabla de contenidos
+Factura Electrónica
+Autofactura electrónica
+Nota de Crédito Electrónica
+Nota de Débito Electrónica
+Nota de Remisión Electrónica
+Casos especiales
+Cliente innominado
+Cliente diplomático
+Diferentes tipos de IVA
+Descuentos
+Descuento por Ítem
+Descuento Global
+Condición de Cobro
+Contado con entrega efectivo PYG
+Contado con entrega efectivo USD
+Contado con entrega efectivo PYG + USD
+Contado con entrega efectivo USD + Tarjeta de Crédito
+Contado con entrega Tarjeta de Crédito + Cheque
+Crédito 3 cuotas
+Crédito 2 cuotas + entrega Tarjeta de Crédito
+Crédito a Plazo
+Recibos
+Recibo Digital con valor total
+Recibo Digital con un Documento Asociado
+Recibo Digital con varios documentos asociados
+A continuación se detallan algunos ejemplos de JSON para la creación de Documentos.
+
+Factura Electrónica
+{
+    "tipoDocumento" : 1,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 1, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier información de interés",
+    "fecha" : "2022-08-18T10:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 1,
+    "moneda" : "PYG",
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "2005001-1",
+        "razonSocial" : "Marcos Adrián Jara Rodríguez",
+        "nombreFantasia" : "Marcos Adrián Jara Rodríguez",
+        "tipoOperacion" : 1,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "ciudad" : 3344,
+        "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "0973515487",
+        "celular" : "0973542154",
+        "email" : "cliente@cliente.com",
+        "codigo" : "1548"
+    },
+    "factura" : {
+        "presencia" : 1
+    },
+    "condicion" : {
+        "tipo" : 1,
+        "entregas" : [{ 
+            "tipo" : 1,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0
+        }, { 
+            "tipo" : 3,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0,
+            "infoTarjeta" : {
+                "numero" : 1234,
+                "tipo" : 1,
+                "tipoDescripcion" : "Dinelco",
+                "titular" : "Marcos Jara",
+                "ruc" : "69695654-1",
+                "razonSocial" : "Bancard",
+                "medioPago" : 1,
+                "codigoAutorizacion" : 232524234
+            }
+        }, { 
+            "tipo" : 2,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0,
+            "infoCheque" : {
+                "numeroCheque": "32323232",
+                "banco" : "Sudameris"
+            }
+        }],
+        "credito" : {
+            "tipo" : 1,
+            "plazo" : "30 días",
+            "cuotas" : 2,
+            "montoEntrega" : 1500000.00,
+            "infoCuotas" : [{
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2021-10-30"
+            }, {
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2021-11-30"
+            }]
+        }
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio 1", 
+        "observacion": "Cualquier información de interés", 
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }, {
+        "codigo" : "A-002",
+        "descripcion": "Producto o Servicio 2", 
+        "observacion": "Cualquier información de interés", 
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 8.5,
+        "precioUnitario": 17300,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }]
+}
+Autofactura electrónica
+{
+    "tipoDocumento" : 4,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 1, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier información de interés",
+    "tipoContribuyente" : 1,
+    "fecha" : "2022-01-12T10:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 2,
+    "moneda" : "PYG",
+    "cambio": 6700.0,
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "80069563-1",
+        "razonSocial" : "Marcos Adrián Jara Rodríguez",
+        "nombreFantasia" : "Marcos Adrián Jara Rodríguez",
+        "tipoOperacion" : 2,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "departamento" : 11,
+        "departamentoDescripcion" : "ALTO PARANA",
+        "distrito" : 143,
+        "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA2",
+        "ciudad" : 3344,
+        "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "061507903",
+        "celular" : "0973837201",
+        "email" : "cliente@cliente.com",
+        "codigo" : "1548"
+    },
+    "usuario" : {
+        "documentoTipo" : 1,
+        "documentoNumero" : "157264",
+        "nombre" : "Marcos Jara",
+        "cargo" : "Vendedor"
+    },
+    "autoFactura" : {
+        "tipoVendedor" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2295305",
+        "nombre" : "Jodvino Santiago Cartes",
+        "direccion" : "Area 4",
+        "numeroCasa" : "001",
+        "departamento" : 11,
+        "departamentoDescripcion" : "ALTO PARANA",
+        "distrito" : 145,
+        "distritoDescripcion" : "CIUDAD DEL ESTE",
+        "ciudad" : 3420,
+        "ciudadDescripcion" : "DON BOSCO",
+        "ubicacion" : {
+            "lugar" : "Donde se realiza la transacción",
+            "departamento" : 11,
+            "departamentoDescripcion" : "ALTO PARANA",
+            "distrito" : 145,
+            "distritoDescripcion" : "CIUDAD DEL ESTE",
+            "ciudad" : 3420,
+            "ciudadDescripcion" : "DON BOSCO"
+        }
+    },
+    "condicion" : {
+        "tipo" : 1,
+        "entregas" : [{ 
+            "tipo" : 1,
+            "monto" : "150000",
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0
+        
+        }]
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio", 
+        "observacion": "Cualquier información de interés", 
+        "partidaArancelaria" : 4444,
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }],
+    "documentoAsociado" : {
+        "formato" : 3,
+        "constanciaTipo" : 1,
+        "constanciaNumero" : 42804571677,
+        "constanciaControl" : "8f9708d2"
+    }
+}
+Para el caso de la Autofactura electrónica, será necesario informar en el documento asociado, la constancia de no contribuyente del vendedor. El mismo puede ser gestionado desde la página de la DENIT. También puede verificar el siguiente documento PDF.
+
+Nota de Crédito Electrónica
+{
+    "tipoDocumento" : 5,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 1, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier información de interés",
+    "tipoContribuyente" : 1,
+    "fecha" : "2022-07-12T08:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 1,
+    "moneda" : "PYG",
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "2005001-1",
+        "razonSocial" : "Marcos Adrián Jara Rodríguez",
+        "nombreFantasia" : "Marcos Adrián Jara Rodríguez",
+        "tipoOperacion" : 1,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "departamento" : 11,
+        "distrito" : 143,
+        "ciudad" : 3344,
+        "pais" : "PRY",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "061987544",
+        "celular" : "0983524132",
+        "email" : "adrianjara@gmail.com",
+        "codigo" : "1548"
+    },
+    "usuario" : {
+        "documentoTipo" : 1,
+        "documentoNumero" : "157264",
+        "nombre" : "Marcos Jara",
+        "cargo" : "Vendedor"
+    },
+    "notaCreditoDebito" : {
+        "motivo" : 1
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio", 
+        "observacion": "Cualquier informacion de interés", 
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "pais" : "PRY",
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }],
+    "documentoAsociado" : {
+        "formato" : 1,
+        "cdc" : "01800695631001002100702012022071214269428290"
+    }
+}
+Para el caso de la Nota de crédito electrónica, será necesario informar en el documento asociado, la factura relacionada que da origen al crédito otorgado.
+
+Nota de Débito Electrónica
+{
+    "tipoDocumento" : 6,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 1, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier informacion de interes",
+    "tipoContribuyente" : 1,
+    "fecha" : "2022-01-12T10:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 1,
+    "moneda" : "PYG",
+    "condicionAnticipo" : null,
+    "condicionTipoCambio": null,
+    "cambio": 6700.0,
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "2005001 -1",
+        "razonSocial" : "Marcos Adrian Jara Rodriguez",
+        "nombreFantasia" : "Marcos Adrian Jara Rodriguez",
+        "tipoOperacion" : 1,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "departamento" : 11,
+        "departamentoDescripcion" : "ALTO PARANA",
+        "distrito" : 143,
+        "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
+        "ciudad" : 3344,
+        "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "xyz",
+        "celular" : "xyz",
+        "email" : "cliente@cliente.com",
+        "codigo" : "1548"
+    },
+    "usuario" : {
+        "documentoTipo" : 1,
+        "documentoNumero" : "157264",
+        "nombre" : "Marcos Jara",
+        "cargo" : "Vendedor"
+    },
+    "notaCreditoDebito" : {
+        "motivo" : 1
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio", 
+        "observacion": "Cualquier informacion de interes", 
+        "partidaArancelaria" : 4444,
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5,
+        "lote" : "A-001",
+        "vencimiento" : "2022-10-30"
+    }],
+    "documentoAsociado" : {
+        "formato" : 1,
+        "cdc" : "01800695631001001000000422021101917569941104"
+    }
+}
+Nota de Remisión Electrónica
+{
+    "tipoDocumento" : 7,
+    "establecimiento" : 1,
+    "punto" : "001",
+    "numero" : 1, 
+    "descripcion" : "Aparece en el documento",
+    "observacion" : "Cualquier informacion de interes",
+    "tipoContribuyente" : 1,
+    "fecha" : "2021-10-19T10:11:00",
+    "tipoEmision" : 1,
+    "tipoTransaccion" : 1,
+    "tipoImpuesto" : 1,
+    "moneda" : "PYG",
+    "cambio": 6700.0,
+    "cliente" : {
+        "contribuyente" : true,
+        "ruc" : "2005001-1",
+        "razonSocial" : "Marcos Adrian Jara Rodriguez",
+        "nombreFantasia" : "Marcos Adrian Jara Rodriguez",
+        "tipoOperacion" : 1,
+        "direccion" : "Avda Calle Segunda y Proyectada",
+        "numeroCasa" : "1515",
+        "departamento" : 11,
+        "departamentoDescripcion" : "ALTO PARANA",
+        "distrito" : 143,
+        "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
+        "ciudad" : 3344,
+        "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tipoContribuyente" : 1,
+        "documentoTipo" : 1,
+        "documentoNumero" : "2324234",
+        "telefono" : "xyz",
+        "celular" : "xyz",
+        "email" : "cliente@cliente.com",
+        "codigo" : "1548"
+    },
+    "usuario" : {
+        "documentoTipo" : 1,
+        "documentoNumero" : "157264",
+        "nombre" : "Marcos Jara",
+        "cargo" : "Vendedor"
+    },
+    "remision" : {
+        "motivo" : 1,
+        "tipoResponsable" : 1, 
+        "kms" : 150,
+        "fechaFactura" : "2021-10-21"
+    },
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio", 
+        "observacion": "Cualquier informacion de interes", 
+        "ncm": "123456",
+        "unidadMedida": 77,
+        "cantidad": 10.5,
+        "precioUnitario": 10800,
+        "pais" : "PRY",
+        "paisDescripcion" : "Paraguay",
+        "tolerancia" : 1,
+        "toleranciaCantidad" : 1,
+        "toleranciaPorcentaje" : 1,
+        "cdcAnticipo" : "44digitos",
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5,
+        "lote" : "A-001",
+        "vencimiento" : "2022-10-30"
+    }],
+    "transporte" : {
+        "tipo" : 1,
+        "modalidad" : 1,
+        "tipoResponsable" : 1,
+        "condicionNegociacion" : "FOB",
+        "numeroManifiesto" : "AF-2541",
+        "numeroDespachoImportacion" : "153223232332",
+        "inicioEstimadoTranslado" : "2021-11-01",
+        "finEstimadoTranslado" : "2021-11-01",
+        "paisDestino" : "PRY", 
+        "paisDestinoNombre" : "Paraguay",
+        "salida" : {
+            "direccion" : "Paraguay",
+            "numeroCasa" : "3232",
+            "complementoDireccion1" : "Entre calle 2", 
+            "complementoDireccion2" : "y Calle 7",
+            "departamento" : 11,
+            "departamentoDescripcion" : "ALTO PARANA",
+            "distrito" : 143,
+            "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
+            "ciudad" : 3344,
+            "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+            "pais" : "PRY",
+            "paisDescripcion" : "Paraguay",
+            "telefonoContacto" : "097x"
+        },
+        "entrega" : {
+            "direccion" : "Paraguay",
+            "numeroCasa" : "3232",
+            "complementoDireccion1" : "Entre calle 2", 
+            "complementoDireccion2" : "y Calle 7",
+            "departamento" : 11,
+            "departamentoDescripcion" : "ALTO PARANA",
+            "distrito" : 143,
+            "distritoDescripcion" : "DOMINGO MARTINEZ DE IRALA",
+            "ciudad" : 3344,
+            "ciudadDescripcion" : "PASO ITA (INDIGENA)",
+            "pais" : "PRY",
+            "paisDescripcion" : "Paraguay",
+            "telefonoContacto" : "097x"
+        },
+        "vehiculo" : {
+            "tipo" : "Camioneta",
+            "marca" : "Nissan",
+            "documentoTipo" : 1, 
+            "documentoNumero" : "232323-1",
+            "obs" : "",
+            "numeroMatricula" : "ALTO PARANA",
+            "numeroVuelo" : "32123"
+        },
+        "transportista" : {
+            "contribuyente" : true,
+            "nombre" : "EMPRESA DE TRANSPORTE VANGUARDIA S A C I",
+            "ruc" : "80011235-0", 
+            "documentoTipo" : 1,
+            "documentoNumero" : "235306",
+            "direccion" : "y Calle 7",
+            "obs" : 11,
+            "pais" : "PRY",
+            "paisDescripcion" : "Paraguay",
+            "chofer" : {
+                "documentoNumero" : "32324253",
+                "nombre" : "Jose Benitez",
+                "direccion" : "Jose Benitez"
+            },
+            "agente" : {
+                "nombre" : "Jose Benitez",
+                "ruc" : "251458-1",
+                "direccion" : "Jose Benitez"
+            }
+        }
+    },
+    "documentoAsociado" : {
+        "formato" : 1,
+        "cdc" : "01800695631001001000000422021101917569941104"
+    }
+}
+Casos especiales
+A continuación se detallan algunos casos muy especiales de configuración que comúnmente causan dudas, por que su confección depende de los valores de otros campos previamente cargados. Para cada caso se muestra solamente la configuración de los campos en cuestión, obviando otros detalles que no tienen relación con el caso mostrado.
+
+Cliente innominado
+Cuando no se desea especificar el nombre del Cliente en la Factura Electrónica a emitir, el mismo debe realizarse según los siguientes datos en el objeto data.cliente.
+
+{
+    "otros datos de la Factura..." : "...",
+    
+    "cliente" : {
+        "contribuyente" : false,
+        "documentoTipo": 5, 
+        "documentoNumero": 0,
+        "razonSocial" : "SIN NOMBRE",
+    }
+}
+Un factura electrónica realizada a un innominado no se puede anular con una nota de crédito, si desea anularlo de todas formas, primeramente, antes de intentar realizar la nota de crédito debe nominar la factura a nombre de una entidad concreta, un contribuyente o una persona física.
+
+Cliente diplomático
+Las facturas a diplomáticos, deben ser exonerados de IVA.
+
+{
+    "otros datos de la Factura..." : "...",
+    
+    "cliente" : {
+        "contribuyente" : false,
+        "documentoTipo": 6, 
+        "documentoNumero": "CD113-3-6642-24",
+        "razonSocial" : "EMBAJADA DE LOS ESTADOS UNIDOS DE AMERICA",
+        "tipoOperacion" : 2,
+        "pais" : "PRY",
+        "tipoContribuyente" : 1,
+        "numeroCasa" : 1515,
+        "ciudad" : 3344
+    }
+}
+Diferentes tipos de IVA
+Para éste caso se muestra las diferentes configuraciones de IVA que puede tener un producto o servicio.
+
+{
+    "otros datos de la Factura..." : "...",
+    
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio Gravada 5% por el 100% del valor del ítem", 
+        "cantidad": 1,
+        "precioUnitario": 85000,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }, {
+        "codigo" : "A-002",
+        "descripcion": "Producto o Servicio Gravada 10% por el 100% del valor del ítem", 
+        "cantidad": 1,
+        "precioUnitario": 95000,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 10
+    }, {
+        "codigo" : "A-003",
+        "descripcion": "Producto o Servicio Iva Parcial Gravada 10% por el 30% del valor del ítem", 
+        "cantidad": 1,
+        "precioUnitario": 105000,
+        "ivaTipo" : 4,
+        "ivaBase" : 30,
+        "iva" : 10
+    }, {
+        "codigo" : "A-004",
+        "descripcion": "Producto o Servicio Iva Parcial Gravada 5% por el 70% del valor del ítem", 
+        "cantidad": 1,
+        "precioUnitario": 115000,
+        "ivaTipo" : 4,
+        "ivaBase" : 70,
+        "iva" : 5
+    }, {
+        "codigo" : "A-005",
+        "descripcion": "Producto o Servicio Exonerado de Impuesto", 
+        "cantidad": 1,
+        "precioUnitario": 125000,
+        "ivaTipo" : 2,
+        "ivaBase" : 0,
+        "iva" : 0
+    }, {
+        "codigo" : "A-006",
+        "descripcion": "Producto o Servicio Exento de Impuesto", 
+        "cantidad": 1,
+        "precioUnitario": 135000,
+        "ivaTipo" : 3,
+        "ivaBase" : 0,
+        "iva" : 0
+    }]
+}
+Lea la descripción del producto para entender cómo se aplicó el Impuesto.
+
+Descuentos
+Descuento por Ítem
+El descuento por ítem debe ser aplicado sobre el precio unitario del producto, es decir, si el precio del producto es 85300 y se realiza un descuento de 300, entonces se aplicará un descuento de 300 por cada cantidad del producto facturado.
+
+{
+    "otros datos de la Factura..." : "...",
+    
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio 1 con descuento por ítem", 
+        "cantidad": 1,
+        "precioUnitario": 85300,
+        "descuento": 300,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 10
+    }, {
+        "codigo" : "A-002",
+        "descripcion": "Producto o Servicio 2 con descuento por ítem", 
+        "cantidad": 1,
+        "precioUnitario": 95530,
+        "descuento": 30,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 10
+    }]
+}
+Descuento Global
+{
+    "otros datos de la Factura..." : "...",
+    "descuentoGlobal" : 20000,
+    "items" : [{
+        "codigo" : "A-001",
+        "descripcion": "Producto o Servicio A", 
+        "cantidad": 30,
+        "precioUnitario": 85000,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 5
+    }, {
+        "codigo" : "A-002",
+        "descripcion": "Producto o Servicio B", 
+        "cantidad": 50,
+        "precioUnitario": 95000,
+        "ivaTipo" : 1,
+        "ivaBase" : 100,
+        "iva" : 10
+    }]
+}
+Condición de Cobro
+Los ejemplos mostrados a continuación son meramente ilustrativos y no limitantes, pudiéndose establecer diferentes combinaciones de condiciones de cobro, hasta alcanzar el monto total de la Factura Electrónica.
+
+Contado con entrega efectivo PYG
+{
+   "otros datos de la Factura..." : "...", 
+   "condicion" : {
+        "tipo" : 1,
+        "entregas" : { 
+            "tipo" : 1,
+            "monto" : 150000,
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0
+        }
+    }
+}
+Contado con entrega efectivo USD
+{
+   "otros datos de la Factura..." : "...",
+   "condicion" : {
+        "tipo" : 1,
+        "entregas" : { 
+            "tipo" : 1,
+            "monto" : 150,
+            "moneda" : "USD",
+            "monedaDescripcion" : "Dolar",
+            "cambio" : 7.425
+        }
+    }
+}
+Contado con entrega efectivo PYG + USD
+{
+   "otros datos de la Factura..." : "...",
+   "condicion" : {
+        "tipo" : 1,
+        "entregas" : [{
+            "tipo" : 1,
+            "monto" : 150000,
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0
+           
+        },{   
+            "tipo" : 1,
+            "monto" : 150,
+            "moneda" : "USD",
+            "monedaDescripcion" : "Dolar",
+            "cambio" : 7.425
+        }],
+    }
+}
+Contado con entrega efectivo USD + Tarjeta de Crédito
+{
+   "otros datos de la Factura..." : "...",
+   "condicion" : {
+           "tipo" : 1,
+           "entregas" : [{
+              "tipo" : 1,
+              "monto" : 150,
+              "moneda" : "USD",
+              "monedaDescripcion" : "Dolar",
+              "cambio" : 7.425
+           
+        },{   
+              "tipo" : 3,
+              "monto" : 150000,
+              "moneda" : "PYG",
+              "monedaDescripcion" : "Guarani",
+              "cambio" : 0.0,
+              "infoTarjeta" : {
+                "numero" : 1234,
+                "tipo" : 1,
+                "tipoDescripcion" : "Dinelco",
+                "titular" : "Marcos Jara",
+                "ruc" : "69695654-1",
+                "razonSocial" : "Bancard",
+                "medioPago" : 1,
+                "codigoAutorizacion" : 232524234
+            }
+        }],
+    }
+}
+Contado con entrega Tarjeta de Crédito + Cheque
+{
+   "otros datos de la Factura..." : "...",
+   "condicion" : {
+            "tipo" : 1,
+            "entregas" : [{
+              "tipo" : 3,
+              "monto" : 150000,
+              "moneda" : "PYG",
+              "monedaDescripcion" : "Guarani",
+              "cambio" : 0.0,
+              "infoTarjeta" : {
+                "numero" : 1234,
+                "tipo" : 1,
+                "tipoDescripcion" : "Dinelco",
+                "titular" : "Marcos Jara",
+                "ruc" : "69695654-1",
+                "razonSocial" : "Bancard",
+                "medioPago" : 1,
+                "codigoAutorizacion" : 232524234
+              }
+           
+        },{   
+             "tipo" : 2,
+             "monto" : 150000,
+             "moneda" : "PYG",
+             "monedaDescripcion" : "Guarani",
+             "cambio" : 0.0,
+             "infoCheque" : {
+                "numeroCheque": "32323232",
+                "banco" : "Sudameris"
+            }
+        }],
+    }
+}
+Crédito 3 cuotas
+{
+    "otros datos de la Factura..." : "...",
+     "condicion" : {
+        "tipo" : 2,
+        "credito": {
+          "tipo" : 2,
+          "cuotas": "3",
+          "infoCuotas" : [{
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2024-10-30"
+            }, {
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2024-11-30"
+            },
+            {
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2024-12-30"
+            }]
+      }
+      
+    },
+ }
+Crédito 2 cuotas + entrega Tarjeta de Crédito
+{
+   "otros datos de la Factura..." : "...",
+   "condicion" : {
+        "tipo" : 2,
+         "credito" : {
+            "tipo" : 1,
+            "plazo" : "30 días",
+            "cuotas" : 2,
+            "montoEntrega" : 1500000.00,
+            "infoCuotas" : [{
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2024-10-30"
+            }, {
+                "moneda" : "PYG",
+                "monto" : 800000.00,
+                "vencimiento" : "2024-11-30"
+            }]
+        },
+     "entregas" : { 
+            "tipo" : 3,
+            "monto" : 150000,
+            "moneda" : "PYG",
+            "monedaDescripcion" : "Guarani",
+            "cambio" : 0.0,
+            "infoTarjeta" : {
+                "numero" : 1234,
+                "tipo" : 1,
+                "tipoDescripcion" : "Dinelco",
+                "titular" : "Marcos Jara",
+                "ruc" : "69695654-1",
+                "razonSocial" : "Bancard",
+                "medioPago" : 1,
+                "codigoAutorizacion" : 232524234
+            }
+    }
+    }
+}
+Crédito a Plazo
+{
+    "otros datos de la Factura..." : "...",
+    "condicion": {
+     "tipo" : 2,
+      "credito": {
+        "tipo": 1,
+        "plazo": "30 días"
+      }
+    }
+ }
+Recibos
+Recibo Digital con valor total
+{
+    "fecha": "2023-10-26T15:59:43",
+    "establecimiento": 1,
+    "punto": 1,
+    "numero": 1,
+    "moneda": "PYG",
+    "concepto": "Pago de Cuota 10",
+    "total": 150000,
+    "cliente": {
+        "codigo": "00001",
+        "contribuyente": true,
+        "ruc": "",
+        "documentoNumero": "0",
+        "documentoTipo": 5,
+        "email": "",
+        "pais": "PRY",
+        "razonSocial": "CONSUMIDOR FINAL",
+        "tipoOperacion": 2
+    },
+    "usuario": {
+        "cargo": "Vendedor",
+        "documentoNumero": "0",
+        "documentoTipo": 9,
+        "nombre": "admin"
+    },
+    "condicion": {
+        "tipo": 1,
+        "entregas": [
+            {
+                "cambio": 0,
+                "moneda": "PYG",
+                "monto": 45000,
+                "tipo": 1
+            }
+        ]
+    }
+}
+Recibo Digital con un Documento Asociado
+Para el caso de agregarse una relación con un documento asociado, entonces el documento asociado debe indicar también el monto del documento asociado. En el caso de usarse esta opción el valor del atributo data.total no es necesario enviar, ya que el total se toma del monto del documento asociado.
+
+{
+    "fecha": "2023-10-26T15:59:43",
+    "establecimiento": 1,
+    "numero": 2,
+    "punto": 1,
+    "concepto" : "Pago de Cuota XYZ - Manzana MANDUVIRA(100.000GS), Lote 10. - Pago de Interes XYZ - Manzana MANDUVIRA, Lote 10.(50.000GS)",
+    "total": 0,
+    "usuario": {
+        "cargo": "Vendedor",
+        "documentoNumero": "0",
+        "documentoTipo": 9,
+        "nombre": "admin"
+    },
+    "cliente": {
+        "codigo": "00001",
+        "contribuyente": false,
+        "documentoNumero": "0",
+        "documentoTipo": 5,
+        "email": "",
+        "pais": "PRY",
+        "razonSocial": "CONSUMIDOR FINAL",
+        "tipoOperacion": 2
+    },
+    "condicion": {
+        "tipo": 1,
+        "entregas": [
+            {
+                "cambio": 0,
+                "moneda": "PYG",
+                "monto": 45000,
+                "tipo": 1
+            }
+        ]
+    },
+    "documentoAsociado": {
+        "formato": 1,
+        "cdc": "55800695631001001000000112023102610001111110",
+        "monto": 185000
+    }
+}
+Recibo Digital con varios documentos asociados
+Para el caso de agregarse una relación con mas de un documento asociado, entonces para cada documento asociado debe indicar también el monto del documento asociado. En el caso de usarse esta opción el valor del atributo data.total no es necesario enviar, ya que el total se toma de la sumatoria de los montos de cada documento asociado.
+
+{
+    "fecha": "2023-10-26T15:59:43",
+    "establecimiento": 1,
+    "punto": 101,
+    "numero": 7,
+    "concepto" : "Pago de Cuota XYZ - Manzana MANDUVIRA(100.000GS), Lote 10. - Pago de Interes XYZ - Manzana MANDUVIRA, Lote 10.(50.000GS)",
+    "total": 0,
+    "cliente": {
+        "codigo": "00001",
+        "contribuyente": false,
+        "documentoNumero": "0",
+        "documentoTipo": 5,
+        "email": "",
+        "pais": "PRY",
+        "razonSocial": "CONSUMIDOR FINAL",
+        "tipoOperacion": 2,
+        "celular": "59597354835551"
+    },
+    "usuario": {
+      "cargo": "Vendedor",
+      "documentoNumero": "0",
+      "documentoTipo": 9,
+      "nombre": "admin"
+    },
+    "condicion": {
+      "tipo": 1,
+      "entregas": [
+            {
+                "cambio": 0,
+                "moneda": "PYG",
+                "monto": 45000,
+                "tipo": 1
+            }
+        ]
+    },
+    "documentoAsociado": [{
+        "formato": 1,
+        "cdc": "55800695631001001000000112023102610001111110",
+        "fecha": "2024-09-01",
+        "monto": 185000,
+        "montoRetencionIva" : 10000,
+        "montoRetencionRenta" : 5000
+    }, {
+        "formato": 2,
+        "cdc": "55800695631001001000000112023102610001111111",
+        "tipoDocumentoImpreso": 1,
+        "timbrado": "12345678",
+        "establecimiento": "002",
+        "punto": "002",
+        "numero": "0000003",
+        "serie": null,
+        "fecha": "2024-09-01",
+        "monto": 186000
+    }]
+}
+Te sirvió la documentación?

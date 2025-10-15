@@ -1,0 +1,176 @@
+
+e-kuatia
+Validar XML
+Instructivo
+VALIDADOR XML
+Esta aplicación realiza la validación de un documento XML en base a un XSD indicado, así como la validación de la firma digital.
+
+CONTENIDO
+Características tecnológicas del formato
+
+Estándar del formato XML
+
+Particularidad de la Firma Digital
+
+Contenedor de Documento Electrónico
+
+Estándar de Comunicación
+
+Estándar de Certificado Digital
+
+Estándar de Firma Digital
+
+Validar XML
+
+Validación de XML
+
+Validación de Firma
+
+Estructura XML para validar Documento Electrónico
+
+Características tecnológicas del formato
+Para más información y detalles técnicos dirigirse al Manual Técnico proveído por la DNIT - GGII (Dirección Nacional de Ingresos Tributarios - Gerencia General de Impuestos Internos) según la versión que va a implementar.
+
+Estándar del formato XML
+El formato de documentos y protocolos de servicios, utilizan el lenguaje de marcas expansible (XML – Expansible Markup Language). La definición de cada archivo XML sigue un estándar denominado “Schema XML”, o lenguaje de esquema, utilizado para describir la estructura y restricciones de los documentos XML. Esta estructura reside en un archivo con extensión .xsd (XML Schema Definition), el que establece qué elementos contendrá el documento, como están organizados, cuáles son los atributos y de qué tipo deben ser estos elementos.
+
+Particularidad de la Firma Digital
+La declaración namespace de la firma digital debe realizarse en la etiqueta <Signature>, conforme con el siguiente ejemplo:
+
+<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+    <dVerFor>
+        142
+    </dVerFor>
+    <DE Id="01800025776001001900018322019012317200146402">
+        ...
+    </DE>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        ...
+    </Signature>
+</rDE>
+La verificacion del elemento <Signature> se realiza con Schema for XML Signatures Revision: 1.1
+
+Contenedor de Documento Electrónico
+Un contenedor del DE (Documento Electrónico) es un archivo XML que contiene el DE, con su validación de recepción, por parte del SIFEN. La estructura del DE está definida en el Manual Técnico proveído por la DNIT - GGII (Dirección Nacional de Ingresos Tributarios - Gerencia General de Impuestos Internos)
+
+Estándar de Comunicación
+La comunicación entre los contribuyentes y la DNIT-GGII está basada en los Servicios Web disponibilizados por el SIFEN. El medio para establecer esta comunicación es la Internet, apoyado en la utilización del protocolo de seguridad TLS versión 1.2, con autenticación mutua. Esto garantiza una comunicación segura, considerando la identificación del cliente consumidor del servicio por medio de certificados digitales. El modelo de comunicación sigue el estándar de Servicios Web definido por el WS-I (Web Services Interoperability Organization) BasicProfile. El intercambio de documentos o mensajes entre el SIFEN y el sistema de los contribuyentes, utiliza el estándar SOAP, versión 1.2, con intercambio de mensajes XML basados en Style/Encoding: Document/Literal. La llamada o Request a cualquiera de los Servicios Web del SIFEN, es realizada con el envío de un mensaje XML incluido en el campo deDatosMsg.
+
+Estándar de Certificado Digital
+El SIFEN utiliza un certificado digital, emitido por cualquiera de los PSC (Prestador de Servicios de Certificación), habilitados por el Ministerio de Industria y Comercio en su carácter de Administrador de la Autoridad Certificadora Raíz del Paraguay y ente regulador. El certificado será utilizado para firmar digitalmente y para autenticación. Puede ser del TIPO F1 (Certificado de Firma Digital por Software) o F2 (Certificado de Firma Digital por Hardware) de persona física o jurídica. En el caso de optar por el certificado de persona jurídica, el RUC del contribuyente estará contenido en el campo SerialNumber. En el caso de optar por el certificado de persona física, éste debe ser de un personal dependiente del contribuyente y el certificado debe contar obligatoriamente con el nombre y el RUC de la entidad en el que presta servicio el titular del certificado. En este último caso el RUC del contribuyente estará contenido en el campo SubjectAlternativeName. Estos certificados digitales serán exigidos por la DNIT-GGII en los siguientes momentos:
+
+Para firma de mensajes de datos: Se refiere al archivo de documento electrónico y cualquier archivo XML, que requiera ser firmado digitalmente. El certificado digital debe contener el RUC del contribuyente emisor y la clave prevista para la función de firma digital.
+Para establecimiento de conexiones: (Comunicación entre el servidor del contribuyente y el servidor del SIFEN). Para este efecto, el certificado digital debe contener el RUC del contribuyente emisor y propietario responsable por la trasmisión del mensaje, con la extensión Extended Key Usage con el permiso clientAuth.
+Estándar de Firma Digital
+Los archivos enviados al SIFEN son documentos electrónicos construidos en lenguaje XML y deben estar firmados en forma digital, con el certificado correspondiente al RUC del contribuyente emisor del documento. Existen elementos que se encuentran presentes en el certificado digital del emisor de forma natural, lo que implica innecesaria su exposición en la estructura XML. En este contexto los DE firmados digitalmente no deben contener los siguientes elementos:
+
+<X509SubjectName>
+<X509IssuerSerial>
+<X509IssuerName>
+<X509SKI>
+De igual manera se debe evitar el uso de los siguientes elementos, ya que esta información será obtenida a partir del certificado digital del emisor.
+
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+<Exponent>
+
+Validar XML
+El Prevalidador realiza dos tipos de validaciones:
+
+Validación XML
+Validación de Firma
+Pudiendose realizar TODO de una vez o por separado. Para realizar las validaciones no es requerido conexion a internet, pero se necesita tener actualizados los XSD localmente por única vez o por cada nueva version que la DNIT-GGII disponibilice.
+
+Validación de XML
+Se realiza la validación de todos los elementos contenidos en el grupo <rDE> utilizando el XSD correspondiente a cada versión del documento. A continuación el XML de una factura ejemplo:
+
+<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+    <dVerFor>
+        150
+    </dVerFor>
+    <DE Id="01123025776001001123018322019012317200146123">
+        <dDVId>
+            2
+        </dDVId>
+        <dFecFirma>
+            2019-01-23T07:47:47
+        </dFecFirma>
+        <gOpeDE>
+            <iTipEmi>
+                1
+            </iTipEmi>
+            <dDesTipEmi>
+                Normal
+            </dDesTipEmi>
+            <dCodSeg>
+                720014640
+            </dCodSeg>
+            <dInfoEmi>
+                AAA
+            </dInfoEmi>
+            <dInfoFisc>
+                AAA
+            </dInfoFisc>
+        </gOpeDE>
+        ...
+    </DE>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        ...
+    </Signature>
+    <gCamFuFD>
+        ...
+    </gCamFuFD>
+</rDE>
+Para este ejemplo se indica que se debe validar con la versión 150 en los valores siRecepDE_v150.xsd y el tag <dVerFor>150</dVerFor> que deben estar relacionados según el Manual Técnico proveído por la DNIT-GGII
+
+Validación de Firma
+La validación de firma digital se realiza sobre el grupo <Signature> según el estandar mencionado en el punto anterior. A continuación un ejemplo:
+
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+        <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+        <Reference URI="#01800025776001001900018322018111317200146406">
+            <Transforms>
+                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+            <DigestValue>
+                Nt2UmpjUHuu2DT6CJc2mtKfgfhgghgnnhjkvvdae=
+            </DigestValue>
+        </Reference>
+    </SignedInfo>
+    <SignatureValue>
+        DWN1my9sH4FI7ygPT3KF1cebrpTNjLaohNqS36O376dTpIuMk1yiE7eQ0oOWHuMro1TnEIxx700srJkflN2HKjf7BQC17vSxbBbVwfM1ft9vbBoAVDeqNXbJ8VFen9lpoQuEo5Gt+UdgLeW/7okJbfAcchF5fMxz3gq+oHbVVoMy7nXto4UGkQPuJLoumMciFUa9SYQS0g001Bfy0yOKzrk+EAjaq3GUMXb3CfnYVnKP94xTH78gu6l2Ym+aO810xtAcWLONMA==
+    </SignatureValue>
+    <KeyInfo>
+        <X509Data>
+            <X509Certificate>
+                MIIIxzCCBq+gAwIBAgITXAAAB10vQjJW//C4YwAAAAAHXTANBgkqhkiG9w0BAQsFADBXMRcwFQYDVQQFEw5SVUMgODAwODA2MTAtNzEVMBMGA1UEChMMQ09ERTEwMCBTLkEuMQswCQYDVQQGEwJQWTEYMBYGA1UEAxMPQ0EtQ09ERTEwMCBTLkEuMB4XDTE4MDgxMDE0NTQ0NloXDTE5MDgxMDE0NTQ0NlowgakxJzAlBgNVBAMTHkpPU0UgRURJTElPIExPTUFRVUlTIEVTQ0FMQU5URTEXMBUGA1UEChMOUEVSU09OQSBGSVNJQ0ExCzAJBgNVBAYTAlBZMRQwEgYDVQQqEwtKT1NFIEVESUxJTzEbMBkGA1UEBBMSTE9NQVFVSVMgRVNDQUxBTlRFMRIwEAYDVQQFEwlDSTIwNjMyMzAxETAPBgNVBAsTCEZJUk1BIEYxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmuVcP+U2fAPYbbyJivK1SdRgyr4CPtayhhc6J2kPdfY7LeR/leGdiW2Rbfn3VRLKWtDJpuEKMN4wW5RkVsLmVsxRPa8Zq3IFGPmQgAUn08dWcB22JplPTqLzf+ryrzd1wNAgz898cOu1gLHm/jrWdpH3od/MStusPyvZzI6sXWUTTvLqacULI+L1AzuRXvf4AexL32zB4GsOFKVylYT5o44SEBJ+dYVR+Mmmpwrsovq4b5nx5Ab+s4DBNZ46B0iYBWVnzYGKAkl2KVGqnmd0A5Z1vumMmcV5XyhNiVLJ9pXG5fL19/nxDElxaQ5CzwWfyQJlkKh7lmzP+upgkKz0WrXsf9289pDj1DCQI3nGoGQdAl7hlpwgWqp53FfvQZpvsSjFzMo+3Htn8xJxphsNF6ouLh6gQcRIeTaiXRPFINAs8BjSJt6V8NHFGR0LbwUaraFKTjzxtW9TTYPosQk5PDKAr33w0uVXXCHi/THninIV0qWb3Hw9GRRPJUwRNgVbjz+JI0ZEaITfcw==
+            </X509Certificate>
+        </X509Data>
+    </KeyInfo>
+</Signature>
+Estructura XML para validar Documento Electronico
+Tener en cuenta que los schemas XSD son distintos por cada versión, por ejemplo para la versión 150 su correspondiente schema es "siRecepDE_v150.xsd"
+
+<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+    <!-- Cualquier versión habilitada por la SET-->
+    <dVerFor>
+        150
+    </dVerFor>
+    <DE Id="01999999991001001914638522022122610449489999">
+        <!-- Elementos del DE -->
+    </DE>
+    <!-- Firma Digital del elemento <DE> -->
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <Reference URI="#01999999991001001914638522022122610449489999"/>
+        <!-- Elementos de la Firma Digital -->
+    </Signature>
+    <gCamFuFD>
+        <!-- Elementos de Campos fuera de la Firma Digital-->
+    </gCamFuFD>
+</rDE>
+© 2022 - Versión 1.0.0
